@@ -29,7 +29,7 @@ public class RouteController {
 		return new ModelAndView("home", "shortestRoute", shortestRoute);
 	}
 	
-	@RequestMapping(value = "rest/route", method = RequestMethod.POST, consumes="application/json", produces = "application/json")
+	@RequestMapping(value = "rest/route", method = RequestMethod.POST, produces = "application/json")
     public @ResponseBody List<Planet> getEmployeeInJSON(@RequestBody RouteVO routeVO) {
 		System.out.println(routeVO.getSource()+"-------"+routeVO.getDestination());
 		return routeService.getShortestPath(routeService.getPlanetByCode(routeVO.getSource()), routeService.getPlanetByCode(routeVO.getDestination())); 

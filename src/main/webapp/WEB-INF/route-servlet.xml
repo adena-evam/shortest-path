@@ -15,11 +15,12 @@
         http://www.springframework.org/schema/tx/spring-tx.xsd">
 
     <mvc:annotation-driven />
-    
+    <mvc:resources mapping="/resources/**" location="/resources/" />
     <tx:annotation-driven/>
 
     <context:component-scan base-package="com.siva.controller, com.siva.service, com.siva.domain, com.siva.dao" /> 
 	<context:component-scan base-package="com.siva.util"/>
+	<context:property-placeholder location="classpath:database.properties"/>
     <bean id="jspViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
         <property name="prefix" value="/WEB-INF/views/"/>
@@ -27,39 +28,24 @@
     </bean>
 
     <mvc:default-servlet-handler />
-<!--     <context:property-placeholder location="classpath:persistence-mysql.properties" /> -->
- <bean id="dataSource"
-  class="org.apache.tomcat.dbcp.dbcp.BasicDataSource">
-    <!-- <property name="driverClassName" value="org.apache.derby.jdbc.EmbeddedDriver" />
-    <property name="url" value="jdbc:derby:memory:demo;create=true" />
-    <property name="username" value="sa" />
-    <property name="password" value="sa" /> -->
-    <!-- <property name="driverClassName" value="com.mysql.jdbc.Driver" />
-    <property name="url" value="jdbc:mysql://localhost/test" />
-    <property name="username" value="root" />
-    <property name="password" value="root" /> -->
-    
-    <property name="driverClassName" value="org.h2.Driver" />
-    <property name="url" value="jdbc:h2:mem:test;DB_CLOSE_DELAY=-1" />
-    <property name="username" value="" />
-    <property name="password" value="" /> 
-</bean>
-
-<bean id="sessionFactory"
-  class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
-    <property name="dataSource" ref="dataSource" />
-    <property name="packagesToScan" value="com.siva.domain" />
-    <property name="hibernateProperties">
-        <props>
-            <!-- <prop key="hibernate.hbm2ddl.auto">update</prop> -->
-            <!-- <prop key="hibernate.dialect">org.hibernate.dialect.DerbyDialect</prop> -->
-            <!-- <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop> -->
-            <prop key="hibernate.hbm2ddl.auto">create-drop</prop>
-            <prop key="hibernate.dialect">org.hibernate.dialect.H2Dialect</prop>
-           
-        </props>
-    </property>
-</bean>
+	<bean id="dataSource" class="org.apache.tomcat.dbcp.dbcp.BasicDataSource">    
+	    <property name="driverClassName" value="${hibernate.driver.classname}" />
+	    <property name="url" value="${hibernate.url}" />
+	    <property name="username" value="${hibernate.username}" />
+	    <property name="password" value="${hibernate.password}" /> 
+	</bean>
+	
+	<bean id="sessionFactory"
+	  class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+	    <property name="dataSource" ref="dataSource" />
+	    <property name="packagesToScan" value="com.siva.domain" />
+	    <property name="hibernateProperties">
+	        <props>
+	            <prop key="hibernate.hbm2ddl.auto">${hibernate.hbm2ddl.auto}</prop>
+	            <prop key="hibernate.dialect">${hibernate.dialect}</prop>
+	        </props>
+	    </property>
+	</bean>
  
 
  

@@ -1,0 +1,27 @@
+@CHARSET "ISO-8859-1";
+
+.lable {
+	width: 100px;
+	position: relative;
+	display: inline-block;
+}
+
+.inputbox {
+	width: 130px;
+	position: relative;
+	display: inline-block;
+}
+
+#container {
+	width: 250px;
+	position: relative;
+	display: block;
+	top: 50px;
+}
+#container input {
+	border-radius: 5px;
+    border-width: 1px;
+    border-color: gray;
+    height: 30px;
+    padding: 5px;
+}
