@@ -14,9 +14,9 @@
 <Div>
 	<H4>Shortest path details:</H4>
 	<div>
-	<c:forEach items="${shortestRoute}" var="planet">
-    	<div>${planet.planetCode}(${planet.planetName})---</div>
-	</c:forEach>
+		<c:forEach items="${shortestRoute}" var="planet">
+	    	<div class='code'>${planet.planetName}[${planet.planetCode}]</div>
+		</c:forEach>
 	</div>
 </Div>
 </body>

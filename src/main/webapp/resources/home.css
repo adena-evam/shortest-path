@@ -18,10 +18,20 @@
 	display: block;
 	top: 50px;
 }
+
 #container input {
 	border-radius: 5px;
-    border-width: 1px;
-    border-color: gray;
-    height: 30px;
-    padding: 5px;
+	border-width: 1px;
+	border-color: gray;
+	height: 30px;
+	padding: 5px;
+}
+
+.code {
+	width: 120px;
+	position: relative;
+	border-style: double;
+	display: inline-block;
+	border-bottom-color: black;
+	padding: 3px 5px;
 }
