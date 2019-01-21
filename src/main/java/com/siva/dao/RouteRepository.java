@@ -4,8 +4,10 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -43,13 +45,21 @@ public class RouteRepository {
 	}
 
 	public List<Planet> getPlanets() {
-		// TODO Auto-generated method stub
+		
 		return getCurrentSession().createQuery("from Planet").list();
 	}
+	
+	
 
 	public Planet getPlanetById(String stringCellValue) {
-		// TODO Auto-generated method stub
 		return (Planet) getCurrentSession().get(Planet.class, stringCellValue);
+	}
+
+	public Route getRouteBySource(Planet source, Planet destination) {
+		Criteria criteria = getCurrentSession().createCriteria(Route.class);
+		Route route = (Route) criteria.add(Restrictions.eq("source", source.getPlanetCode()))
+		                       .add(Restrictions.eq("destination", destination.getPlanetCode())).uniqueResult();
+		return route;
 	}
 	
 }

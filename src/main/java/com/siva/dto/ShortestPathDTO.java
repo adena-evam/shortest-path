@@ -1,7 +1,10 @@
 package com.siva.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.siva.domain.Route;
 
+@JsonInclude(Include.NON_NULL)
 public class ShortestPathDTO {
 
 	

@@ -19,22 +19,25 @@
 	    http://jax-ws.java.net/spring/core.xsd
 	    http://jax-ws.dev.java.net/spring/servlet
 	    http://jax-ws.java.net/spring/servlet.xsd">
-
-    <mvc:annotation-driven />
+	    
+	    <mvc:annotation-driven />
     <mvc:resources mapping="/resources/**" location="/resources/" />
     <tx:annotation-driven/>
 
     <context:component-scan base-package="com.siva.controller, com.siva.service, com.siva.domain, com.siva.dao" /> 
 	<context:component-scan base-package="com.siva.util, com.siva.ws.service"/>
 	<context:property-placeholder location="classpath:database.properties"/>
-    <bean id="jspViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-        <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
-        <property name="prefix" value="/WEB-INF/views/"/>
-        <property name="suffix" value=".jsp"/>
-    </bean>
+	    
+	<wss:binding url="/routeWS">
+        <wss:service>
+            <ws:service bean="#routeWS"/>
+        </wss:service>
+    </wss:binding>
 
-    <mvc:default-servlet-handler />
-	<bean id="dataSource" class="org.apache.tomcat.dbcp.dbcp.BasicDataSource">    
+    <!-- Web service methods -->
+ <bean id="routeWS" class="com.siva.ws.service.RouteWSServiceImpl"></bean>
+
+<bean id="dataSource" class="org.apache.tomcat.dbcp.dbcp.BasicDataSource">    
 	    <property name="driverClassName" value="${hibernate.driver.classname}" />
 	    <property name="url" value="${hibernate.url}" />
 	    <property name="username" value="${hibernate.username}" />
@@ -63,7 +66,5 @@
 <bean id="persistenceExceptionTranslationPostProcessor"
   class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor"/>
     
-    
-
-
-</beans>
+    	    
+	    </beans>

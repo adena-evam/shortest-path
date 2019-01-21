@@ -8,6 +8,9 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.jws.WebService;
+import javax.jws.soap.SOAPBinding;
+
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -20,9 +23,9 @@ import org.springframework.util.ResourceUtils;
 import com.siva.dao.RouteRepository;
 import com.siva.domain.Planet;
 import com.siva.domain.Route;
+import com.siva.dto.ShortestPathDTO;
 import com.siva.path.DA;
 import com.siva.path.Graph;
-import com.siva.util.TestData;
 
 @Service
 public class RouteServiceImpl implements RouteService {
@@ -64,7 +67,12 @@ public class RouteServiceImpl implements RouteService {
 	}
 	
 	@Transactional
-	public List<Planet> getShortestPath(Planet source, Planet destination){
+	public Route getRouteBySource(Planet source, Planet destination){
+		return routeRepository.getRouteBySource(source, destination);
+	}
+	
+	@Transactional
+	public List<ShortestPathDTO> getShortestPath(Planet source, Planet destination){
 		
 		Graph graph = new Graph(getPlanets(), getRoutes());
         DA dijkstra = new DA(graph);
@@ -74,9 +82,23 @@ public class RouteServiceImpl implements RouteService {
         for (Planet vertex : path) {
             System.out.println(vertex.getPlanetCode());
         }
-		return path;
+        
+        return convertToShortestPathDTO(source, destination, path);
 	}
 	
+	private List<ShortestPathDTO> convertToShortestPathDTO(Planet source,
+			Planet destination, LinkedList<Planet> path) {
+		LinkedList<ShortestPathDTO> pathInfo = new LinkedList<ShortestPathDTO>();
+		for (Planet planet : path) {
+			ShortestPathDTO s= new ShortestPathDTO();
+			s.setPlanetCode(planet.getPlanetCode());
+			s.setPlanetName(planet.getPlanetName());
+			//s.setRoute(routeRepository.getRouteBySource(source, destination));
+			pathInfo.add(s);
+		}
+		return pathInfo;
+	}
+
 	public List<Planet> readPlanetName(File inputStream)    {
 	        List<Planet> rowHolder = new ArrayList<Planet>();
 	        try{
@@ -129,7 +151,10 @@ public class RouteServiceImpl implements RouteService {
 		}
 
 		public Planet getPlanetByCode(String planetNode) {
+			System.out.println(planetNode);
 			return routeRepository.getPlanetById(planetNode);
 		}
+
+		
 	
 }

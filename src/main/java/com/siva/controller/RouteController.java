@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.siva.domain.Planet;
+import com.siva.dto.ShortestPathDTO;
 import com.siva.service.RouteService;
 import com.siva.vo.RouteVO;
 
@@ -24,14 +25,12 @@ public class RouteController {
 
 	@RequestMapping(value="getPath", method=RequestMethod.POST)
 	public ModelAndView getPath(@RequestParam("source") String source, @RequestParam("destination") String destination){
-		System.out.println(source+"--------"+destination);
-		List<Planet> shortestRoute= routeService.getShortestPath(routeService.getPlanetByCode(source), routeService.getPlanetByCode(destination));
+		List<ShortestPathDTO> shortestRoute= routeService.getShortestPath(routeService.getPlanetByCode(source), routeService.getPlanetByCode(destination));
 		return new ModelAndView("home", "shortestRoute", shortestRoute);
 	}
 	
 	@RequestMapping(value = "rest/route", method = RequestMethod.POST, produces = "application/json")
-    public @ResponseBody List<Planet> getEmployeeInJSON(@RequestBody RouteVO routeVO) {
-		System.out.println(routeVO.getSource()+"-------"+routeVO.getDestination());
+    public @ResponseBody List<ShortestPathDTO> getRoutesInJSON(@RequestBody RouteVO routeVO) {
 		return routeService.getShortestPath(routeService.getPlanetByCode(routeVO.getSource()), routeService.getPlanetByCode(routeVO.getDestination())); 
     }
 	

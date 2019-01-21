@@ -117,6 +117,35 @@
 		    <version>1.4.187</version>
 		</dependency>
 		
+		<dependency>
+			<groupId>org.jvnet.jax-ws-commons.spring</groupId>
+			<artifactId>jaxws-spring</artifactId>
+			<version>1.9</version>
+			<exclusions>
+		  <exclusion>
+           		<groupId>org.springframework</groupId>
+      			<artifactId>spring-core</artifactId>
+        	  </exclusion>
+        	  <exclusion>
+           		<groupId>org.springframework</groupId>
+      			<artifactId>spring-context</artifactId>
+        	  </exclusion>
+        	  <exclusion>
+           		<groupId>com.sun.xml.stream.buffer</groupId>
+      			<artifactId>streambuffer</artifactId>
+        	  </exclusion>
+        	  <exclusion>
+           		<groupId>org.jvnet.staxex</groupId>
+      			<artifactId>stax-ex</artifactId>
+        	  </exclusion>
+		</exclusions>
+		</dependency>
+		 
+		<dependency>
+			<groupId>com.sun.xml.ws</groupId>
+			<artifactId>jaxws-rt</artifactId>
+			<version>2.2.8</version>
+		</dependency>
 	
 	</dependencies>
 
@@ -139,7 +168,7 @@
 					<version>2.4</version>
 					<configuration>
 						<warSourceDirectory>src/main/webapp</warSourceDirectory>
-						<warName>route</warName>
+						<warName>galaxy-route</warName>
 						<failOnMissingWebXml>false</failOnMissingWebXml>
 					</configuration>
 				</plugin>
